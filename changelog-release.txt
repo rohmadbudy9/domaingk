@@ -1,0 +1,25 @@
+***CHANGELOG***
+
+---1.0.2---
+Release Date – 10 April 2025
+
+
+
+---1.0.1---
+Release Date – 3 April 2025
+
+Menambahkan menu cek slot dan ping.
+
+Penyesuaian tampilan dengan fitur darkmode.
+
+Perbaikan minor pada struktur folder dan penamaan controller.
+
+
+---1.0.0---
+Release Date – 24 Maret 2025
+
+Rilis awal aplikasi Cek Domain GK.
+
+Fitur: Tambah, edit, hapus, dan tampilkan data website.
+
+Input: Nama OPD, Alamat Website, dan Kategori.

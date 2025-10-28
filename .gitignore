@@ -1,0 +1,29 @@
+# ===========================
+# CodeIgniter 4 .gitignore
+# ===========================
+
+# Vendor & Composer dependencies
+/vendor/
+composer.lock
+
+# Environment file (jangan upload credential)
+.env
+
+# Cache, logs, session files
+/writable/cache/
+/writable/logs/
+/writable/session/
+/writable/uploads/
+
+# IDE / editor files
+*.log
+*.DS_Store
+*.bak
+*.swp
+*.swo
+*.tmp
+.vscode/
+.idea/
+
+# System files
+Thumbs.db
