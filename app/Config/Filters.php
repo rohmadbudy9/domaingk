@@ -34,9 +34,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'auth' => \App\Filters\AuthFilter::class,
-        'admin' => \App\Filters\AuthFilter::class,
-
+        'auth'          => \App\Filters\AuthFilter::class,
+        'ratelimit'     => \App\Filters\RateLimitFilter::class,
     ];
 
     /**
@@ -72,26 +71,22 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
+            'csrf',
             'auth' => [
                 'except' => [
+                    '/',
                     'login',
+                    'logout',
                     'doLogin',
+                    '/doLogin',
                     'register',
                     'storeUser',
-                    'presensi',            // route presensi bebas
-                    'presensi/*',          // semua parameter di presensi
-                    'presensilog',         // log presensi bebas
-                    'poinbukukerja',       // poin buku kerja bebas
-                ]
+                ],
             ],
-            // 'honeypot',
-            // 'csrf',
-            // 'invalidchars',
         ],
 
         'after' => [
-            // 'honeypot',
-            // 'secureheaders',
+            'toolbar',
         ],
     ];
 

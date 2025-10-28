@@ -8,7 +8,13 @@ class PenggunaModel extends Model
 {
     protected $table = 'tb_user';
     protected $primaryKey = 'id';
-    protected $allowedFields = ['username', 'password', 'level_user'];
+    protected $allowedFields = [
+        'username',
+        'password',
+        'level_user',
+        'login_attempts',
+        'last_attempt'
+    ];
 
     public function getAdmins()
     {

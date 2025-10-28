@@ -36,4 +36,5 @@ class ReportModel extends Model
 
         return $builder->orderBy('tb_domain.nama_opd', 'ASC')->findAll();
     }
+    
 }

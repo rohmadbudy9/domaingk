@@ -58,6 +58,7 @@
           <p style="color: green;"><?= session()->getFlashdata('success'); ?></p>
         <?php endif; ?>
         <form action="<?= base_url('/doLogin') ?>" method="post">
+          <?= csrf_field() ?>
           <div class="input-group mb-3">
             <input type="text" name="username" class="form-control" placeholder="Username" required />
             <div class="input-group-text"><span class="bi bi-envelope"></span></div>

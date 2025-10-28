@@ -11,8 +11,9 @@ use CodeIgniter\Router\RouteCollection;
 // ==========================
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
-$routes->post('/doLogin', 'Auth::doLogin');
 $routes->get('/logout', 'Auth::logout');
+$routes->post('/doLogin', 'Auth::doLogin', ['filter' => 'ratelimit']);
+
 
 // ==========================
 // 🏠 DASHBOARD
@@ -42,6 +43,8 @@ $routes->get('/data/ping/(:num)', 'DataController::ping/$1');
 // ==========================
 $routes->get('/report', 'ReportController::report');
 $routes->post('/report/submitreport', 'ReportController::submitreport');
+$routes->get('/report/exportPDF', 'ReportController::exportPDF');
+$routes->get('/report/exportExcel', 'ReportController::exportExcel');
 
 // ==========================
 // 👑 ADMIN ONLY

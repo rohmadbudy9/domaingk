@@ -40,6 +40,7 @@
           <div class="card mb-4">
             <div class="card-body">
               <form action="<?= base_url('/report/submitreport') ?>" method="post">
+                <?= csrf_field() ?>
                 <table class="table table-bordered">
                   <thead>
                     <tr>

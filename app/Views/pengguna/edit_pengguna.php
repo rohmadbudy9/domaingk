@@ -25,6 +25,7 @@
         <div class="col-md-8">
           <div class="card card-primary card-outline mb-4">
             <form action="<?= base_url('/pengguna/update/' . $users['id']) ?>" method="post" id="editUserForm">
+              <?= csrf_field() ?>
               <div class="card-body">
 
                 <!-- Username -->

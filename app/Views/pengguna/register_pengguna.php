@@ -36,6 +36,8 @@
           <div class="card card-primary card-outline mb-4">
             <!--begin::Form-->
             <form action="<?= base_url('/pengguna/insert') ?>" method="post" id="registerForm" novalidate>
+              <?= csrf_field() ?>
+
               <div class="card-body">
                 <!-- Username -->
                 <div class="mb-3">

@@ -38,6 +38,7 @@
           <div class="card card-primary card-outline mb-4">
             <!--begin::Form-->
             <form action="<?= base_url('/data/update/' . $website['id']) ?>" method="post">
+              <?= csrf_field() ?>
               <!--begin::Body-->
               <div class="card-body">
                 <div class="mb-3">

@@ -53,6 +53,27 @@
                                 <label for="date">Pilih Tanggal:</label>
                                 <input type="date" id="date" name="date" value="<?= esc($selected_date) ?>" class="form-control" style="max-width: 250px; display: inline-block;">
                                 <button type="submit" class="btn btn-secondary">Tampilkan</button>
+                                <!-- Tombol Export dengan Dropdown -->
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item text-danger"
+                                                href="<?= base_url('/report/exportPDF?date=' . $selected_date . '&kategori=' . $selected_kategori) ?>"
+                                                target="_blank">
+                                                <i class="fas fa-file-pdf"></i> Export PDF
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item text-success"
+                                                href="<?= base_url('/report/exportExcel?date=' . $selected_date . '&kategori=' . $selected_kategori) ?>">
+                                                <i class="fas fa-file-excel"></i> Export Excel
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
 
                             </form>
 
