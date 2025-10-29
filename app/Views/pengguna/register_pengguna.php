@@ -61,8 +61,8 @@
                     class="form-control"
                     placeholder="Password"
                     required
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
-                    title="Minimal 8 karakter, mengandung huruf besar, huruf kecil, dan angka." />
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
+                    title="Minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan simbol." />
                   <small class="text-muted">
                     Password harus minimal <b>8 karakter</b> dan mengandung huruf besar, huruf kecil, serta angka.
                   </small>

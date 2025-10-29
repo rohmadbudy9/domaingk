@@ -48,11 +48,9 @@
                     name="password"
                     id="password"
                     class="form-control"
-                    placeholder="••••••••"
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
-                    title="Minimal 8 karakter, mengandung huruf besar, huruf kecil, dan angka.">
+                    placeholder="••••••••">
                   <small class="text-muted">
-                    Jika diisi, password harus minimal <b>8 karakter</b> dengan huruf besar, kecil, dan angka.
+                    Kosongkan jika tidak ingin mengubah password. Jika diisi, harus minimal 8 karakter dengan huruf besar, huruf kecil, dan angka.
                   </small>
                 </div>
 
