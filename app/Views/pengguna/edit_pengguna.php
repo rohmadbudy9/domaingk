@@ -11,7 +11,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Edit User</li>
           </ol>
         </div>
@@ -76,12 +76,12 @@
           <script>
             document.getElementById('editUserForm').addEventListener('submit', function(event) {
               const password = document.getElementById('password').value;
-              const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+              const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
               // Validasi hanya jika password diisi
               if (password && !regex.test(password)) {
                 event.preventDefault();
-                alert('Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, serta angka.');
+                alert('Password harus minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan simbol.');
               }
             });
           </script>
