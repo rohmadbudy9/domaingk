@@ -43,7 +43,8 @@
         integrity="sha256-4MX+61mt9NVvvuPjUWdUdyfZfxSB1/Rf9WtqRHgG5S0="
         crossorigin="anonymous" />
 
-    <link rel="icon" type="image/png" src="dist/assets/img/logo.png" href="<?= base_url('dist/assets/img/logo.png'); ?>">
+    <link rel="icon" type="image/png" href="dist/assets/img/logo.png">
+
 
 </head>
 

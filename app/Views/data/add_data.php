@@ -73,7 +73,6 @@
                     <option value="IKM">IKM</option>
                     <option value="Other">Other</option>
                     <option value="Cekslot">Cekslot</option>
-                    <option value="Ping">Ping</option>
                   </select>
                 </div>
                 <!--end::Body-->

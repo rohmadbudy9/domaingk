@@ -6,10 +6,9 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Cek Domain GK v2</title>
   <!--begin::Primary Meta Tags-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="title" content="AdminLTE 4 | Login Page" />
+  <meta name="title" content="Cek Domain GK v2" />
   <meta name="author" content="ColorlibHQ" />
   <!--end::Primary Meta Tags-->
   <!--begin::Fonts-->
@@ -35,6 +34,7 @@
   <!--end::Third Party Plugin(Bootstrap Icons)-->
   <!--begin::Required Plugin(AdminLTE)-->
   <link rel="stylesheet" href="dist/css/adminlte.css" />
+  <link rel="icon" type="image/png" href="dist/assets/img/logo.png">
   <!--end::Required Plugin(AdminLTE)-->
 </head>
 <!--end::Head-->

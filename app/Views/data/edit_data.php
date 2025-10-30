@@ -70,7 +70,6 @@
                     <option value="IKM" <?= ($website['kategori'] == 'IKM') ? 'selected' : '' ?>>IKM</option>
                     <option value="Other" <?= ($website['kategori'] == 'Other') ? 'selected' : '' ?>>Other</option>
                     <option value="Cekslot" <?= ($website['kategori'] == 'Cekslot') ? 'selected' : '' ?>>Cekslot</option>
-                    <option value="Ping" <?= ($website['kategori'] == 'Ping') ? 'selected' : '' ?>>Ping</option>
                   </select>
                 </div>
                 <!--end::Body-->
