@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Add User</li>
           </ol>
         </div>
@@ -61,8 +61,8 @@
                     class="form-control"
                     placeholder="Password"
                     required
-                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$"
-                    title="Minimal 8 karakter, mengandung huruf besar, huruf kecil, dan angka." />
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$"
+                    title="Minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan simbol." />
                   <small class="text-muted">
                     Password harus minimal <b>8 karakter</b> dan mengandung huruf besar, huruf kecil, serta angka.
                   </small>
@@ -91,11 +91,11 @@
           <script>
             document.getElementById('registerForm').addEventListener('submit', function(event) {
               const password = document.getElementById('password').value;
-              const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/;
+              const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
               if (!regex.test(password)) {
                 event.preventDefault();
-                alert('Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, serta angka.');
+                alert('Password harus minimal 8 karakter, mengandung huruf besar, huruf kecil, angka, dan simbol.');
               }
             });
           </script>

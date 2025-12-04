@@ -20,31 +20,21 @@ class ReportController extends BaseController
         $this->ReportModel = new ReportModel();
     }
 
+    // 🔹 Submit report
     public function submitreport()
     {
-        $ReportModel = new ReportModel();
-
         $statuses = $this->request->getPost('status');
-        $notes    = $this->request->getPost('note');
+        $notes    = $this->request->getPost('note') ?? [];
 
         $today = date('Y-m-d');
         $user = session()->get('username');
 
-        foreach ($statuses as $domain_id => $status) {
-            $data = [
-                'domain_id'  => $domain_id,
-                'status'      => $status,
-                'note'        => $status === 'down' ? $notes[$domain_id] : null,
-                'checked_at'  => $today,
-                'checked_by'  => $user,
-            ];
-
-            $ReportModel->save($data);
-        }
+        $this->ReportModel->saveReports($statuses, $notes, $user, $today);
 
         return redirect()->to('/dashboard/')->with('success', 'Report berhasil disimpan!');
     }
 
+    // 🔹 Tampilkan report
     public function report()
     {
         $date = $this->request->getGet('date') ?? date('Y-m-d');
@@ -65,6 +55,7 @@ class ReportController extends BaseController
         return view('/report/report_view', $data);
     }
 
+    // 🔹 Export PDF
     public function exportPDF()
     {
         $date = $this->request->getGet('date') ?? date('Y-m-d');
@@ -90,6 +81,7 @@ class ReportController extends BaseController
         $dompdf->stream('Report_' . $date . '.pdf', ['Attachment' => 1]);
     }
 
+    // 🔹 Export Excel
     public function exportExcel()
     {
         $date = $this->request->getGet('date') ?? date('Y-m-d');
@@ -130,7 +122,6 @@ class ReportController extends BaseController
         $writer = new Xlsx($spreadsheet);
         $filename = 'Report_' . $date . '.xlsx';
 
-        // Header untuk download
         header('Content-Type: application/vnd.ms-excel');
         header("Content-Disposition: attachment;filename=\"$filename\"");
         header('Cache-Control: max-age=0');

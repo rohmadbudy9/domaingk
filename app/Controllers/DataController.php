@@ -17,7 +17,7 @@ class DataController extends BaseController
     public function add()
     {
         $data = [
-            'username' => session()->get('username'),
+            'username'   => session()->get('username'),
             'level_user' => session()->get('level_user')
         ];
         return view('data/add_data', $data);
@@ -26,7 +26,7 @@ class DataController extends BaseController
     // 🔹 Proses tambah data
     public function insert()
     {
-        $this->dataModel->save([
+        $this->dataModel->createData([
             'nama_opd'   => $this->request->getPost('nama_opd'),
             'alamat_web' => $this->request->getPost('alamat_web'),
             'kategori'   => $this->request->getPost('kategori')
@@ -36,21 +36,21 @@ class DataController extends BaseController
     }
 
     // 🔹 Halaman edit data
-    public function edit($id)
+    public function edit($id, $view = 'data/edit_data')
     {
-        $website = $this->dataModel->find($id);
+        $website = $this->dataModel->getById($id);
 
         if (!$website) {
             return redirect()->to('/dashboard')->with('error', 'Data tidak ditemukan!');
         }
 
         $data = [
-            'website'   => $website,
-            'username'  => session()->get('username'),
+            'website'    => $website,
+            'username'   => session()->get('username'),
             'level_user' => session()->get('level_user')
         ];
 
-        return view('data/edit_data', $data);
+        return view($view, $data);
     }
 
     // 🔹 Proses update data
@@ -58,7 +58,7 @@ class DataController extends BaseController
     {
         $kategori = $this->request->getPost('kategori');
 
-        $this->dataModel->update($id, [
+        $this->dataModel->updateData($id, [
             'nama_opd'   => $this->request->getPost('nama_opd'),
             'alamat_web' => $this->request->getPost('alamat_web'),
             'kategori'   => $kategori
@@ -71,10 +71,10 @@ class DataController extends BaseController
     // 🔹 Hapus data
     public function delete($id)
     {
-        $website = $this->dataModel->find($id);
+        $website = $this->dataModel->getById($id);
 
         if ($website) {
-            $this->dataModel->delete($id);
+            $this->dataModel->deleteData($id);
             return redirect()->to('/dashboard/kategori/' . $website['kategori'])
                 ->with('success', 'Data berhasil dihapus!');
         }
@@ -86,42 +86,23 @@ class DataController extends BaseController
     public function pingList()
     {
         $data = [
-            'websites'  => $this->dataModel->where('kategori', 'Ping')->findAll(),
-            'username'  => session()->get('username'),
+            'websites'   => $this->dataModel->getByCategory('Ping'),
+            'username'   => session()->get('username'),
             'level_user' => session()->get('level_user')
         ];
         return view('data/ping', $data);
     }
 
-    // 🔹 Halaman edit data
+    // 🔹 Halaman edit ping
     public function editping($id)
     {
-        $website = $this->dataModel->find($id);
-
-        if (!$website) {
-            return redirect()->to('/dashboard')->with('error', 'Data tidak ditemukan!');
-        }
-
-        $data = [
-            'website'   => $website,
-            'username'  => session()->get('username'),
-            'level_user' => session()->get('level_user')
-        ];
-
-        return view('data/edit_ping', $data);
+        return $this->edit($id, 'data/edit_ping');
     }
 
     // 🔹 Proses update ping
     public function updateping($id)
     {
-        $kategori = $this->request->getPost('kategori');
-
-        $this->dataModel->update($id, [
-            'nama_opd'   => $this->request->getPost('nama_opd'),
-            'alamat_web' => $this->request->getPost('alamat_web'),
-            'kategori'   => $kategori
-        ]);
-
+        $this->update($id);
         return redirect()->to('/ping-page')
             ->with('success', 'Data berhasil diperbarui!');
     }
@@ -129,10 +110,10 @@ class DataController extends BaseController
     // 🔹 Hapus ping
     public function deleteping($id)
     {
-        $website = $this->dataModel->find($id);
+        $website = $this->dataModel->getById($id);
 
         if ($website) {
-            $this->dataModel->delete($id);
+            $this->dataModel->deleteData($id);
             return redirect()->to('/ping-page')
                 ->with('success', 'Data berhasil dihapus!');
         }
@@ -140,11 +121,10 @@ class DataController extends BaseController
         return redirect()->to('/ping-page')->with('error', 'Data tidak ditemukan!');
     }
 
-
-    // 🔹 Fungsi untuk melakukan ping
+    // 🔹 Fungsi untuk melakukan ping (tetap di controller)
     public function ping($id)
     {
-        $website = $this->dataModel->find($id);
+        $website = $this->dataModel->getById($id);
 
         if (!$website) {
             return $this->response->setJSON([
@@ -155,13 +135,11 @@ class DataController extends BaseController
 
         $host = escapeshellarg($website['alamat_web']);
 
-        // ✅ Tentukan perintah ping sesuai sistem operasi
         $isWindows = strtoupper(substr(PHP_OS, 0, 3)) === 'WIN';
         $pingCommand = $isWindows
             ? "ping -n 4 $host"
             : "ping -c 4 $host 2>&1";
 
-        // Jalankan perintah ping (dibatasi untuk keamanan)
         $pingResult = @shell_exec($pingCommand);
 
         if (!$pingResult) {
@@ -171,7 +149,6 @@ class DataController extends BaseController
             ]);
         }
 
-        // Ubah hasil ping ke array baris
         $pingLines = explode("\n", trim($pingResult));
 
         return $this->response->setJSON([

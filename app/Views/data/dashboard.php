@@ -16,7 +16,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="../">Dashboard /</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard /</a></li>
 
           </ol>
         </div>
@@ -197,21 +197,6 @@
           </a>
         </div>
 
-        <div class="col-12 col-sm-6 col-md-3">
-          <a href="<?= base_url('/ping-page') ?>" class="nav-link">
-            <div class="info-box">
-              <span class="info-box-icon bg-transparent shadow-sm">
-                <i class="bi bi-wifi"></i>
-              </span>
-              <div class="info-box-content">
-                <span class="info-box-text">Ping </span>
-                <span class="info-box-number"><?= $count_ping ?></span>
-              </div>
-              <!-- /.info-box-content -->
-            </div>
-            <!-- /.info-box -->
-          </a>
-        </div>
 
         <!-- /.col -->
 

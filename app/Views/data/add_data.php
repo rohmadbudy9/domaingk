@@ -14,7 +14,7 @@
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-end">
-            <li class="breadcrumb-item"><a href="../">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
             <li class="breadcrumb-item active" aria-current="page">Add Data</li>
           </ol>
         </div>
@@ -73,7 +73,6 @@
                     <option value="IKM">IKM</option>
                     <option value="Other">Other</option>
                     <option value="Cekslot">Cekslot</option>
-                    <option value="Ping">Ping</option>
                   </select>
                 </div>
                 <!--end::Body-->

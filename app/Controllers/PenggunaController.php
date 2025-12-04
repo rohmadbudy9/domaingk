@@ -47,18 +47,16 @@ class PenggunaController extends BaseController
         $password = trim($this->request->getPost('password'));
         $level_user = $this->request->getPost('level_user');
 
-        // 🔒 Validasi password kuat
-        if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-            return redirect()->back()->withInput()->with('error', 'Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, serta angka.');
+        try {
+            $this->penggunaModel->saveUser([
+                'username' => $username,
+                'password' => $password,
+                'level_user' => $level_user,
+            ]);
+            return redirect()->to('/pengguna')->with('success', 'Pengguna berhasil ditambahkan!');
+        } catch (\InvalidArgumentException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
-
-        $this->penggunaModel->save([
-            'username' => $username,
-            'password' => password_hash($password, PASSWORD_DEFAULT),
-            'level_user' => $level_user,
-        ]);
-
-        return redirect()->to('/pengguna')->with('success', 'Pengguna berhasil ditambahkan!');
     }
 
     // 🔹 Hapus pengguna
@@ -105,22 +103,15 @@ class PenggunaController extends BaseController
         $password = trim($this->request->getPost('password'));
         $level_user = $this->request->getPost('level_user');
 
-        $updateData = [
-            'username' => $username,
-            'level_user' => $level_user
-        ];
-
-        // 🔒 Jika password diisi, validasi kekuatannya terlebih dahulu
-        if (!empty($password)) {
-            if (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,}$/', $password)) {
-                return redirect()->back()->withInput()->with('error', 'Password harus minimal 8 karakter dan mengandung huruf besar, huruf kecil, serta angka.');
-            }
-
-            $updateData['password'] = password_hash($password, PASSWORD_DEFAULT);
+        try {
+            $this->penggunaModel->updateUser($id, [
+                'username' => $username,
+                'password' => $password,
+                'level_user' => $level_user,
+            ]);
+            return redirect()->to('/pengguna')->with('success', 'Data pengguna berhasil diperbarui!');
+        } catch (\InvalidArgumentException $e) {
+            return redirect()->back()->withInput()->with('error', $e->getMessage());
         }
-
-        $this->penggunaModel->update($id, $updateData);
-
-        return redirect()->to('/pengguna')->with('success', 'Data pengguna berhasil diperbarui!');
     }
 }
