@@ -24,7 +24,7 @@ class ReportController extends BaseController
     public function submitreport()
     {
         $statuses = $this->request->getPost('status');
-        $notes    = $this->request->getPost('note');
+        $notes    = $this->request->getPost('note') ?? [];
 
         $today = date('Y-m-d');
         $user = session()->get('username');

@@ -9,6 +9,9 @@ use CodeIgniter\Router\RouteCollection;
 // ==========================
 // 🔐 AUTHENTICATION
 // ==========================
+$routes->get('/tamu', 'TamuController::addtamu');
+$routes->post('/tamu/insert', 'TamuController::insert');
+$routes->get('/tamu/exportPDF/(:num)', 'TamuController::exportPDF/$1');
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
@@ -28,15 +31,6 @@ $routes->post('/data/insert', 'DataController::insert');
 $routes->get('/data/edit/(:num)', 'DataController::edit/$1');
 $routes->post('/data/update/(:num)', 'DataController::update/$1');
 $routes->get('/data/delete/(:num)', 'DataController::delete/$1');
-
-// ==========================
-// 🌐 PING FUNCTION
-// ==========================
-$routes->get('/ping-page', 'DataController::pingList');
-$routes->get('/data/editping/(:num)', 'DataController::editping/$1');
-$routes->post('/data/updateping/(:num)', 'DataController::updateping/$1');
-$routes->get('/data/ping/(:num)', 'DataController::ping/$1');
-
 
 // ==========================
 // 🧾 REPORT

@@ -81,6 +81,7 @@ class Filters extends BaseFilters
                     '/doLogin',
                     'register',
                     'storeUser',
+                    '/tamu',
                 ],
             ],
         ],

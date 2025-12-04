@@ -74,7 +74,6 @@
                                         </li>
                                     </ul>
                                 </div>
-
                             </form>
 
                             <table class="table table-bordered table-striped">

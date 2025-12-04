@@ -1,0 +1,27 @@
+/* public/assets/css/custom.css */
+
+.auth-fluid {
+  /* Ganti 'nama-gambar-baru-anda.jpg' dengan nama file gambar Anda */
+  background-image: url('../images/bg_auth.png');
+  
+  /* Properti tambahan untuk memastikan gambar pas */
+  background-size: cover;
+  background-position: center;
+}
+
+td.text-wrap {
+        white-space: normal !important;
+        word-wrap: break-word;
+    }
+
+    table.dataTable td {
+        vertical-align: top;
+    }
+
+    .btn-group-action {
+        display: flex;
+        gap: 6px;
+        /* jarak antar tombol */
+        justify-content: center;
+        white-space: nowrap;
+    }
