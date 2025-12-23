@@ -11,11 +11,21 @@ class DashboardController extends BaseController
     {
         $model = new DashboardModel();
 
-        return view('tamu/dashboard', [
-            'totalTamu'     => $model->totalTamu(),
-            'totalHariIni'  => $model->totalHariIni(),
-            'rekapLokasi'   => $model->rekapLokasi(),
-            'latestTamu'    => $model->latestTamu(10)
-        ]);
+        $data = [
+            'username'        => session()->get('username'),
+            'level_user'      => session()->get('level_user'),
+
+            // Statistik utama
+            'totalTamu'       => $model->totalTamu(),
+
+            // Rekap penting
+            'rekapLokasi'     => $model->rekapLokasi(),
+            // 'rekapKeperluan'  => $model->rekapKeperluan(),
+
+            // Data operasional
+            'latestTamu'      => $model->latestTamu(10),
+        ];
+
+        return view('tamu/dashboard', $data);
     }
 }
