@@ -36,6 +36,18 @@
             padding: 6px;
             font-weight: bold;
         }
+
+        .signature-table {
+            width: 100%;
+            margin-top: 40px;
+            border: none;
+        }
+
+        .signature-table td {
+            border: none;
+            text-align: center;
+            padding-top: 60px;
+        }
     </style>
 </head>
 
@@ -146,6 +158,29 @@
             </td>
         </tr>
     </table>
+    <br><br>
+
+    <table class="signature-table">
+        <tr>
+            <td width="50%">
+                Mengetahui,<br>
+                Petugas Data Center
+            </td>
+            <td width="50%">
+                Gunungkidul, <?= date('d-m-Y') ?><br>
+                Pengunjung
+            </td>
+        </tr>
+        <tr>
+            <td>
+                ________________________
+            </td>
+            <td>
+                ( <?= esc($tamu['nama']) ?> )
+            </td>
+        </tr>
+    </table>
+
 
 </body>
 
