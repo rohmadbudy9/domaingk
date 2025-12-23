@@ -9,6 +9,7 @@ class TamuModel extends Model
     protected $table      = 'tb_tamu';
     protected $primaryKey = 'id';
     protected $allowedFields = [
+        'nomor_tiket',
         'lokasi_dc',
         'kategori_keperluan',
         'keperluan',
@@ -23,4 +24,5 @@ class TamuModel extends Model
         'foto_diri',
         'foto_ktp'
     ];
+    protected $useTimestamps = true;
 }

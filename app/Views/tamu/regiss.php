@@ -62,7 +62,9 @@
         <?php if (session()->getFlashdata('success')): ?>
           <p style="color: green;"><?= session()->getFlashdata('success'); ?></p>
         <?php endif; ?>
-        <form action="<?= base_url('tamu/insert'); ?>" method="post" enctype="multipart/form-data">
+        <!-- <form action="<?= base_url('tamu/insert'); ?>" method="post" enctype="multipart/form-data"> -->
+        <form action="<?= base_url('tamu/review'); ?>" method="post" enctype="multipart/form-data">
+
           <?= csrf_field() ?>
           <!-- Lokasi Data Center -->
           <div class="input-group mb-3">

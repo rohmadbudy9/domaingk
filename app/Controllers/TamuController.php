@@ -109,4 +109,113 @@ class TamuController extends BaseController
 
         return $dompdf->stream($filename, ["Attachment" => 1]);
     }
+    public function review()
+    {
+        $form = $this->request->getPost();
+
+        $fotoDiri = $this->request->getFile('foto_diri');
+        $fotoKtp  = $this->request->getFile('foto_ktp');
+
+        $tmpPath = 'uploads/tmp/';
+        if (!is_dir($tmpPath)) {
+            mkdir($tmpPath, 0777, true);
+        }
+
+        $fotoDiriName = $fotoDiri->getRandomName();
+        $fotoKtpName  = $fotoKtp->getRandomName();
+
+        $fotoDiri->move($tmpPath, $fotoDiriName);
+        $fotoKtp->move($tmpPath, $fotoKtpName);
+
+        $personel = [];
+        if (!empty($form['personel_nama'])) {
+            foreach ($form['personel_nama'] as $i => $nama) {
+                $personel[] = [
+                    'nama' => $nama,
+                    'nomor_hp' => $form['personel_hp'][$i]
+                ];
+            }
+        }
+
+        session()->set('review_data', [
+            'form' => $form,
+            'personel' => $personel,
+            'foto_diri' => $tmpPath . $fotoDiriName,
+            'foto_ktp' => $tmpPath . $fotoKtpName
+        ]);
+
+        return view('tamu/review', [
+            'form' => $form,
+            'personel' => $personel,
+            'foto_diri' => $tmpPath . $fotoDiriName,
+            'foto_ktp' => $tmpPath . $fotoKtpName
+        ]);
+    }
+    public function submitFinal()
+    {
+        $data = session()->get('review_data');
+        if (!$data) {
+            return redirect()->to('tamu/addtamu');
+        }
+
+        $model = new TamuModel();
+        $db = \Config\Database::connect();
+
+        // Generate nomor tiket
+        $today = date('Ymd');
+        $countToday = $model
+            ->where('DATE(created_at)', date('Y-m-d'))
+            ->countAllResults();
+
+        $nomorTiket = 'TK-' . $today . '-' . str_pad($countToday + 1, 4, '0', STR_PAD_LEFT);
+
+        // Pindahkan file ke folder final
+        $fotoDiriFinal = 'uploads/foto_diri/' . basename($data['foto_diri']);
+        $fotoKtpFinal  = 'uploads/foto_ktp/' . basename($data['foto_ktp']);
+
+        rename($data['foto_diri'], $fotoDiriFinal);
+        rename($data['foto_ktp'], $fotoKtpFinal);
+
+        // Insert tb_tamu
+        $tamuID = $model->insert([
+            'nomor_tiket' => $nomorTiket,
+            'lokasi_dc' => $data['form']['lokasi_dc'],
+            'kategori_keperluan' => $data['form']['kategori_keperluan'],
+            'keperluan' => $data['form']['keperluan'],
+            'nama' => $data['form']['nama'],
+            'asal' => $data['form']['asal'],
+            'nomor_hp' => $data['form']['nomor_hp'],
+            'email' => $data['form']['email'],
+            'jumlah' => $data['form']['jumlah'],
+            'aktivitas' => $data['form']['aktivitas'],
+            'tanggal_kedatangan' => $data['form']['tanggal_kedatangan'],
+            'waktu_kedatangan' => $data['form']['waktu_kedatangan'],
+            'foto_diri' => basename($fotoDiriFinal),
+            'foto_ktp' => basename($fotoKtpFinal),
+        ]);
+
+        // Insert personel
+        foreach ($data['personel'] as $p) {
+            $db->table('tamu_personel')->insert([
+                'tamu_id' => $tamuID,
+                'nama' => $p['nama'],
+                'nomor_hp' => $p['nomor_hp']
+            ]);
+        }
+
+        session()->remove('review_data');
+        session()->set([
+            'tamu_id' => $tamuID,
+            'nomor_tiket' => $nomorTiket
+        ]);
+
+        return redirect()->to('tamu/success');
+    }
+    public function success()
+    {
+        return view('tamu/success', [
+            'tamu_id' => session()->get('tamu_id'),
+            'nomor_tiket' => session()->get('nomor_tiket')
+        ]);
+    }
 }

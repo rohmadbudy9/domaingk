@@ -10,8 +10,12 @@ use CodeIgniter\Router\RouteCollection;
 // 🔐 AUTHENTICATION
 // ==========================
 $routes->get('/tamu', 'TamuController::addtamu');
-$routes->post('/tamu/insert', 'TamuController::insert');
+$routes->post('/tamu/review', 'TamuController::review');
+$routes->post('/tamu/submitFinal', 'TamuController::submitFinal');
+$routes->get('/tamu/success', 'TamuController::success');
 $routes->get('/tamu/exportPDF/(:num)', 'TamuController::exportPDF/$1');
+$routes->get('/dashboard', 'DashboardController::index');
+
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
