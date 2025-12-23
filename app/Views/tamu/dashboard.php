@@ -41,14 +41,6 @@
                     </div>
                 </div>
 
-                <!-- <div class="col-md-4">
-                    <div class="card bg-success text-white">
-                        <div class="card-body">
-                            <h5>Kunjungan Hari Ini</h5>
-                            <h2><?= $totalHariIni ?></h2>
-                        </div>
-                    </div>
-                </div> -->
 
             </div>
 
