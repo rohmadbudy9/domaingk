@@ -126,7 +126,7 @@
 
                 <!-- Action -->
                 <div class="d-flex justify-content-between mt-4">
-                    <a href="<?= base_url('tamu/addtamu') ?>" class="btn btn-secondary">
+                    <a href="<?= base_url('tamu') ?>" class="btn btn-secondary">
                         <i class="bi bi-arrow-left"></i> Kembali Edit
                     </a>
 
