@@ -14,7 +14,7 @@ $routes->post('/tamu/review', 'TamuController::review');
 $routes->post('/tamu/submitFinal', 'TamuController::submitFinal');
 $routes->get('/tamu/success', 'TamuController::success');
 $routes->get('/tamu/exportPDF/(:num)', 'TamuController::exportPDF/$1');
-$routes->get('/dashboard', 'DashboardController::index');
+$routes->get('/dashboardtamu', 'DashboardController::index');
 
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
