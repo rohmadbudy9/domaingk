@@ -6,6 +6,8 @@ use CodeIgniter\Config\BaseConfig;
 
 class App extends BaseConfig
 {
+    public string $version = '1.3';
+
     /**
      * --------------------------------------------------------------------------
      * Base Site URL

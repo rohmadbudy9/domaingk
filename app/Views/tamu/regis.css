@@ -1,0 +1,624 @@
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75) url(assets/clients/loading2.gif) no-repeat center center;
+            z-index: 10000;
+        }
+
+        /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+
+        .tip-hover {
+            position: relative;
+        }
+
+        .tip-hover .tip-text {
+            visibility: hidden;
+            width: fit-content;
+            background-color: #f9f9f9;
+            color: #307fdd;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            left: 100%;
+            margin-left: -220px;
+            opacity: 1;
+            top: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .tip-hover:hover .tip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .svg-icon {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .container {
+            display: inline-block;
+            width: 320px;
+        }
+
+        #Cam {
+            background: rgb(255, 255, 215);
+        }
+
+        #Prev {
+            background: rgb(255, 255, 155);
+        }
+
+        #Saved {
+            background: rgb(255, 255, 55);
+        }
+
+        /* end of test camera style */
+
+        html {
+            background: url('https://apps.ndcmoratelindo.com/assets/illustrations/backgrounds.svg') no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            background-color: #E3F2F7;
+        }
+
+        .rows {
+            height: 100hv;
+        }
+
+        table.dataTable table {
+            border-radius: 5px;
+        }
+
+        table.dataTable thead tr th {
+            background-color: #206bc4;
+            color: #fff;
+        }
+
+        @media (min-width:320px) {
+            /* body {
+            margin: 0;
+            height: 100%;
+            min-width: 100%;
+            background-color: #E3F2F7;
+            background: url('https://apps.ndcmoratelindo.com/assets/illustrations/backgrounds.svg') repeat;
+            background-size: cover;
+        } */
+
+            /* body {
+            margin: 0;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, #F4FAFC, #307fdd);
+        } */
+
+            .rows {
+                height: 100vh;
+            }
+
+            .cards .card {
+                margin-bottom: 10px;
+            }
+
+            .cards2 .card {
+                margin-bottom: 10px;
+            }
+
+            .cards3 .card {
+                margin-bottom: 10px;
+            }
+
+            .cards3 .toms {
+                margin-top: 5px;
+            }
+
+            .cards4 .card {
+                display: none;
+                margin-bottom: 10px;
+            }
+
+            .partner {
+                margin-left: 30%;
+                margin-right: 30%;
+            }
+
+            .clients {
+                margin-left: 20%;
+                margin-right: 20%;
+            }
+
+            .gbr {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                top: 630px;
+                left: 100px;
+            }
+
+            .rows .rows1 {
+                position: relative;
+            }
+
+            .front-text {
+                margin-top: 100px;
+            }
+
+            .vertical-center {
+                position: absolute;
+            }
+
+            .testnav2 {
+                display: none;
+            }
+
+            .lastnav {
+                display: none;
+            }
+
+            .advice-title {
+                display: none;
+            }
+
+            .footer-profile {
+                display: none;
+            }
+
+            .view-partners {
+                display: none;
+            }
+
+            .price::before {
+                font-size: 30px;
+                top: -80px;
+                left: 0;
+                position: relative;
+                content: 'IDR';
+                font-weight: lighter;
+            }
+
+            .price strong {
+                font-size: 135px;
+                font-weight: 600;
+            }
+
+            .price span {
+                font-size: 31px;
+                top: -75px;
+                position: relative;
+            }
+
+            .price em {
+                position: relative;
+                left: -80px;
+                font-size: 20px;
+                font-weight: lighter;
+            }
+
+            .progress-bar-danger {
+                background-color: #e90f10;
+            }
+
+            .progress-bar-warning {
+                background-color: #ffad00;
+            }
+
+            .progress-bar-success {
+                background-color: #02b502;
+            }
+
+            .btn-add a {
+                width: 100%;
+                border-radius: 0;
+            }
+
+        }
+
+        @media (min-width:800px) {
+            /* body {
+            margin: 0;
+            min-height: 100%;
+            min-width: 100%;
+            background-color: #E3F2F7;
+            background: url('https://apps.ndcmoratelindo.com/assets/illustrations/backgrounds.svg') no-repeat;
+            background-size: cover;
+        } */
+
+            .rows {
+                height: 100vh;
+            }
+
+            .cards .card {
+                margin-bottom: 10px;
+            }
+
+            .cards2 .card {
+                margin-bottom: 10px;
+            }
+
+            .cards3 .card {
+                margin-bottom: 10px;
+            }
+
+            .cards3 .toms {
+                margin-top: 5px;
+            }
+
+            .cards4 .card {
+                display: none;
+                margin-bottom: 10px;
+            }
+
+            .partner {
+                margin-left: 40%;
+                margin-right: 40%;
+            }
+
+            .clients {
+                margin-left: 30%;
+                margin-right: 30%;
+            }
+
+            .rows .rows1 {
+                position: relative;
+                margin-bottom: 20px;
+            }
+
+            .rows .rows2 {
+                position: relative;
+                margin-top: 20px;
+            }
+
+            .gbr {
+                position: absolute;
+                width: 300px;
+                height: 300px;
+                top: 630px;
+                left: 100px;
+            }
+
+            .front-text {
+                margin-top: 100px;
+            }
+
+            .vertical-center {
+                position: absolute;
+            }
+
+            .testnav2 {
+                display: none;
+            }
+
+            .advice-title {
+                display: none;
+            }
+
+            .footer-profile {
+                display: none;
+            }
+
+            .view-partners {
+                display: none;
+            }
+
+            .price::before {
+                font-size: 30px;
+                top: -80px;
+                left: 0;
+                position: relative;
+                content: 'IDR';
+                font-weight: lighter;
+            }
+
+            .price strong {
+                font-size: 135px;
+                font-weight: 600;
+            }
+
+            .price span {
+                font-size: 31px;
+                top: -75px;
+                position: relative;
+            }
+
+            .price em {
+                position: relative;
+                left: -80px;
+                font-size: 20px;
+                font-weight: lighter;
+            }
+
+            .progress-bar-danger {
+                background-color: #e90f10;
+            }
+
+            .progress-bar-warning {
+                background-color: #ffad00;
+            }
+
+            .progress-bar-success {
+                background-color: #02b502;
+            }
+
+            .btn-add a {
+                width: 100%;
+                border-radius: 0;
+            }
+
+            .open_photo {
+                width: 400px;
+            }
+
+
+        }
+
+        @media (min-width:1025px) {
+            body {
+                margin: 0;
+                min-height: 100%;
+                min-width: 100%;
+                background: inherit;
+            }
+
+            .cards {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: auto;
+                grid-gap: 1rem;
+            }
+
+            .cards2 {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-auto-rows: auto;
+                grid-gap: 1rem;
+            }
+
+            .cards3 {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                grid-auto-rows: auto;
+                grid-gap: 1rem;
+            }
+
+            .cards3 .toms {
+                margin-top: 0;
+            }
+
+            .cards4 {
+                display: grid;
+                grid-template-columns: repeat(6, 1fr);
+                grid-auto-rows: auto;
+                grid-gap: 1rem;
+            }
+
+            .cards5 {
+                margin-left: 43%;
+                display: grid;
+                grid-template-columns: repeat(5, 5%);
+            }
+
+            .cards4 .card {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .center {
+                text-align: center;
+                border: 3px solid green;
+            }
+
+            .partner {
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+
+            .clients {
+                margin-left: 10%;
+                margin-right: 10%;
+            }
+
+            .judul {
+                position: absolute;
+            }
+
+            .test {
+                display: none;
+            }
+
+            .gbr {
+                position: absolute;
+                left: 550px;
+                top: 80px;
+                width: 600px;
+                height: 600px;
+            }
+
+            .front-text {
+                width: 600px;
+            }
+
+            .front-text2 {
+                width: 560px;
+            }
+
+            .testnav2 {
+                display: block;
+            }
+
+            .testnav {
+                display: none;
+            }
+
+            .lastnav {
+                display: block;
+            }
+
+            .columnA {
+                float: left;
+                width: 40%;
+            }
+
+            .columnB {
+                float: right;
+                width: 60%;
+            }
+
+            .columnC {
+                float: left;
+                width: 50%;
+            }
+
+            .columnD {
+                float: right;
+                width: 50%;
+            }
+
+            .columnE {
+                float: left;
+                width: 20%;
+            }
+
+            .columnF {
+                float: right;
+                width: 80%;
+            }
+
+            .columnG {
+                float: left;
+                width: 30%;
+            }
+
+            .columnH {
+                float: right;
+                width: 70%;
+            }
+
+            .columnI {
+                float: left;
+                width: 80%;
+            }
+
+            .columnJ {
+                float: right;
+                width: 20%;
+            }
+
+            .btn-ask {
+                width: 45%;
+                margin: 20px;
+            }
+
+            .advice-title {
+                display: block;
+            }
+
+            .advice-title2 {
+                display: none;
+            }
+
+            .footer-profile {
+                display: block;
+                text-align: center;
+            }
+
+            .rows1 {
+                background-color: #e8f4f8;
+                background: url('https://apps.ndcmoratelindo.com/assets/illustrations/back-domain.svg');
+                background-repeat: no-repeat;
+                background-size: 2000px 900px;
+                width: auto;
+            }
+
+            .view-partners {
+                display: block;
+            }
+
+            .price::before {
+                font-size: 30px;
+                top: -80px;
+                left: 0;
+                position: relative;
+                content: 'IDR';
+                font-weight: lighter;
+            }
+
+            .price strong {
+                font-size: 135px;
+                font-weight: 600;
+            }
+
+            .price span {
+                font-size: 31px;
+                top: -75px;
+                position: relative;
+            }
+
+            .price em {
+                position: relative;
+                left: -80px;
+                font-size: 20px;
+                font-weight: lighter;
+            }
+
+            .progress-bar-danger {
+                background-color: #e90f10;
+            }
+
+            .progress-bar-warning {
+                background-color: #ffad00;
+            }
+
+            .progress-bar-success {
+                background-color: #02b502;
+            }
+
+            .line {
+                position: absolute;
+                top: 180px;
+                height: 1px;
+                width: 100%;
+                background-color: #206bc4;
+            }
+
+            .sub-line {
+                position: relative;
+                height: 1px;
+                width: 100%;
+                background-color: #206bc4;
+            }
+
+            .btn-add {
+                position: absolute;
+                top: 155px;
+                right: 20px;
+            }
+
+            .btn-add a {
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+            }
+
+            .open_photo {
+                width: 400px;
+            }
+
+        }

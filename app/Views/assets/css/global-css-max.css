@@ -1,0 +1,61 @@
+  td.text-wrap {
+        white-space: normal !important;
+        word-wrap: break-word;
+    }
+
+    table.dataTable td {
+        vertical-align: top;
+    }
+
+    .btn-group-action {
+        display: flex;
+        gap: 6px;
+        /* jarak antar tombol */
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+  /* public/assets/css/custom.css */
+
+/*
+=========================================
+ Kustomisasi Tema Dark menjadi Hitam Pekat
+=========================================
+*/
+/* DARK */
+[data-bs-theme="dark"] {
+    --ct-body-bg: #242222;              /* Latar belakang utama halaman  */
+    --ct-secondary-bg: #111111;         /* Latar belakang sekunder (misal: kartu, modal)  */
+    --ct-tertiary-bg: #1a1a1a;          /* Latar belakang tersier (misal: hover, form)  */
+    --ct-border-color: #333333;         /* Warna border/garis  */
+    --ct-body-color: #d1d4d6;           /* Warna teks utama  */
+    --ct-tertiary-color: #b89797;       /* Warna teks tersier/judul  */
+    
+}
+
+/* SETING WARNA MENU DAN TEXTnya */
+html[data-bs-theme="dark"][data-menu-color="dark"],
+html[data-bs-theme="light"][data-menu-color="dark"] {
+  --ct-menu-bg: #3b3d38;              /* Latar belakang menu  */
+     --ct-menu-item-color: #e9e9f0;         /* Warna teks menu utama (abu-abu gelap) */
+    --ct-menu-item-hover-color: #4d599b;    /* Warna teks menu saat disentuh (hitam) */
+    --ct-menu-item-active-color: #767392;   /* Warna teks menu yang sedang aktif (hitam) */
+}
+
+/* LIGHT---- */
+[data-bs-theme="light"] {
+    --ct-body-bg: #efe9f3;              /* Latar belakang utama halaman  */
+    --ct-body-color: #030303;           /* Warna teks utama  */
+    --ct-tertiary-color: #111010;       /* Warna teks tersier/judul  */
+}
+html[data-bs-theme="dark"][data-menu-color="light"],
+html[data-bs-theme="light"][data-menu-color="light"] {  /* tema gelap dan warna menu light  */
+    --ct-menu-bg: #dbdce9;              /* Latar belakang menu  */
+     --ct-menu-item-color: #1f2c3a;         /* Warna teks menu utama (abu-abu gelap) */
+    --ct-menu-item-hover-color: #364494;    /* Warna teks menu saat disentuh (hitam) */
+    --ct-menu-item-active-color: #394a83;   /* Warna teks menu yang sedang aktif (hitam) */
+}
+
+
+
+

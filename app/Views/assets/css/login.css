@@ -1,0 +1,6 @@
+.bg-card-login {
+    background-image: url('../images/codegarp17.png');
+    /* Perhatikan path relatif jika perlu */
+    background-position: top right;
+    background-repeat: no-repeat;
+}
