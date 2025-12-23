@@ -158,8 +158,6 @@
             </td>
         </tr>
     </table>
-    <br><br>
-
     <table class="signature-table">
         <tr>
             <td width="50%">
