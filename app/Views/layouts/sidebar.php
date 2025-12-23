@@ -89,6 +89,19 @@
               </li>
             </ul>
           <?php endif; ?>
+          <ul
+            class="nav sidebar-menu flex-column"
+            data-lte-toggle="treeview"
+            role="menu"
+            data-accordion="false">
+            <li class="nav-item menu-open">
+              <a href="<?= base_url('/dashboardtamu') ?>" class="nav-link active">
+                <i class="nav-icon bi bi-person-vcard-fill"></i>
+                <p>Dashboard Tamu</p>
+              </a>
+            </li>
+          </ul>
+
 
           <!--end::Sidebar Menu-->
         </nav>

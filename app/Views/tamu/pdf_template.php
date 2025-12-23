@@ -47,6 +47,10 @@
     <div class="section-title">Informasi Tamu</div>
     <table>
         <tr>
+            <th>Nomor Tiket Kunjungan</th>
+            <td><?= esc($tamu['nomor_tiket']) ?></td>
+        </tr>
+        <tr>
             <th>Lokasi Data Center</th>
             <td><?= esc($tamu['lokasi_dc']) ?></td>
         </tr>
