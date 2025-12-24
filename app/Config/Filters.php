@@ -78,16 +78,11 @@ class Filters extends BaseFilters
                     'login',
                     'logout',
                     'doLogin',
-                    '/doLogin',
-                    'register',
-                    'storeUser',
-                    '/tamu',
-                    '/tamu/review',
-                    '/tamu/submitFinal',
-                    '/tamu/exportPDF/*',
-                    '/tamu/success',
+                    'tamu',
+                    'tamu/*',
                 ],
             ],
+
         ],
 
         'after' => [

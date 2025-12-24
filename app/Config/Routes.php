@@ -7,7 +7,7 @@ use CodeIgniter\Router\RouteCollection;
  */
 
 // ==========================
-// 🔐 AUTHENTICATION
+// TAMU
 // ==========================
 $routes->get('/tamu', 'TamuController::addtamu');
 $routes->post('/tamu/review', 'TamuController::review');
@@ -15,7 +15,9 @@ $routes->post('/tamu/submitFinal', 'TamuController::submitFinal');
 $routes->get('/tamu/success', 'TamuController::success');
 $routes->get('/tamu/exportPDF/(:num)', 'TamuController::exportPDF/$1');
 $routes->get('/dashboardtamu', 'DashboardController::index');
-
+// ==========================
+// 🔐 AUTHENTICATION
+// ==========================
 $routes->get('/', 'Auth::login');
 $routes->get('/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');

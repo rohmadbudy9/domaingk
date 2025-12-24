@@ -113,6 +113,10 @@ class TamuController extends BaseController
     {
         $form = $this->request->getPost();
 
+        if ($form['keperluan'] === 'Other') {
+            $form['keperluan'] = $this->request->getPost('keperluan_other');
+        }
+
         $rules = [
             'foto_diri' => 'uploaded[foto_diri]|max_size[foto_diri,2048]|is_image[foto_diri]|mime_in[foto_diri,image/jpg,image/jpeg,image/png]',
             'foto_ktp'  => 'uploaded[foto_ktp]|max_size[foto_ktp,2048]|is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]',

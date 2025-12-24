@@ -92,7 +92,7 @@
           <div class="input-group mb-3">
             <label class="form-label col-3 col-form-label">Keperluan<span style="color:red">*</span></label>
             <span class="input-group-text"><i class="bi bi-info-circle"></i></span>
-            <select name="keperluan" class="form-control" required>
+            <select name="keperluan" id="keperluan" class="form-control" required>
               <option value="" disabled selected>-- Pilih Keperluan --</option>
               <option value="Survey">Survey</option>
               <option value="Meeting">Meeting</option>
@@ -100,6 +100,17 @@
               <option value="Other">Other</option>
             </select>
           </div>
+          <div class="input-group mb-3 d-none" id="keperluan-other-wrapper">
+            <label class="form-label col-3 col-form-label">
+              Keperluan Lainnya<span style="color:red">*</span>
+            </label>
+            <span class="input-group-text"><i class="bi bi-pencil-square"></i></span>
+            <input type="text"
+              id="keperluan_other"
+              class="form-control"
+              placeholder="Tuliskan keperluan Anda">
+          </div>
+
           <!-- Nama -->
           <div class="input-group mb-3">
             <label class="form-label col-3 col-form-label">Nama Tamu<span style="color:red">*</span></label>
@@ -149,14 +160,24 @@
           <div class="input-group mb-3">
             <label class="form-label col-3 col-form-label">Foto Diri<span style="color:red">*</span></label>
             <span class="input-group-text"><i class="bi bi-person-bounding-box"></i></span>
-            <input type="file" name="foto_diri" class="form-control" accept="image/*" required />
+            <input type="file"
+              name="foto_diri"
+              class="form-control"
+              accept="image/jpeg,image/png"
+              onchange="validateImage(this)"
+              required>
           </div>
 
           <!-- Foto KTP -->
           <div class="input-group mb-3">
             <label class="form-label col-3 col-form-label">Kartu ID / KTP / Paspor<span style="color:red">*</span></label>
             <span class="input-group-text"><i class="bi bi-card-image"></i></span>
-            <input type="file" name="foto_ktp" class="form-control" accept="image/*" required />
+            <input type="file"
+              name="foto_ktp"
+              class="form-control"
+              accept="image/jpeg,image/png"
+              onchange="validateImage(this)"
+              required>
           </div>
 
           <!-- Tanggal -->
@@ -268,6 +289,46 @@
       }
     });
   </script>
+  <script>
+    function validateImage(input) {
+      const file = input.files[0];
+      if (!file) return;
+
+      const maxSize = 2 * 1024 * 1024; // 2MB
+      const allowedTypes = ['image/jpeg', 'image/png'];
+
+      // Validasi tipe file
+      if (!allowedTypes.includes(file.type)) {
+        alert('Format file harus JPG atau PNG');
+        input.value = '';
+        return;
+      }
+
+      // Validasi ukuran file
+      if (file.size > maxSize) {
+        alert('Ukuran file maksimal 2 MB');
+        input.value = '';
+        return;
+      }
+    }
+  </script>
+  <script>
+    document.getElementById('keperluan').addEventListener('change', function() {
+      const otherWrapper = document.getElementById('keperluan-other-wrapper');
+      const otherInput = document.getElementById('keperluan_other');
+
+      if (this.value === 'Other') {
+        otherWrapper.classList.remove('d-none');
+        otherInput.required = true;
+      } else {
+        otherWrapper.classList.add('d-none');
+        otherInput.required = false;
+        otherInput.value = '';
+      }
+    });
+  </script>
+
+
   <!--end::OverlayScrollbars Configure-->
   <!--end::Script-->
 </body>
