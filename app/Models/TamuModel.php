@@ -25,4 +25,9 @@ class TamuModel extends Model
         'foto_ktp'
     ];
     protected $useTimestamps = true;
+
+    public function countByTanggal($tanggal)
+    {
+        return $this->where('tanggal_kedatangan', $tanggal)->countAllResults();
+    }
 }

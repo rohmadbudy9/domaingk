@@ -84,7 +84,7 @@ class Filters extends BaseFilters
                     '/tamu',
                     '/tamu/review',
                     '/tamu/submitFinal',
-                    '/tamu/exportPDF/{id}',
+                    '/tamu/exportPDF/*',
                     '/tamu/success',
                 ],
             ],

@@ -113,10 +113,26 @@ class TamuController extends BaseController
     {
         $form = $this->request->getPost();
 
+        $rules = [
+            'foto_diri' => 'uploaded[foto_diri]|max_size[foto_diri,2048]|is_image[foto_diri]|mime_in[foto_diri,image/jpg,image/jpeg,image/png]',
+            'foto_ktp'  => 'uploaded[foto_ktp]|max_size[foto_ktp,2048]|is_image[foto_ktp]|mime_in[foto_ktp,image/jpg,image/jpeg,image/png]',
+        ];
+
+        if (! $this->validate($rules)) {
+            return redirect()->back()
+                ->withInput()
+                ->with('error', $this->validator->getErrors());
+        }
+
         $fotoDiri = $this->request->getFile('foto_diri');
         $fotoKtp  = $this->request->getFile('foto_ktp');
 
-        $tmpPath = 'uploads/tmp/';
+        if (! $fotoDiri->isValid() || ! $fotoKtp->isValid()) {
+            return redirect()->back()
+                ->with('error', 'File upload tidak valid');
+        }
+
+        $tmpPath = WRITEPATH . 'uploads/tmp/';
         if (!is_dir($tmpPath)) {
             mkdir($tmpPath, 0777, true);
         }
@@ -127,89 +143,110 @@ class TamuController extends BaseController
         $fotoDiri->move($tmpPath, $fotoDiriName);
         $fotoKtp->move($tmpPath, $fotoKtpName);
 
+        // Personel tambahan
         $personel = [];
         if (!empty($form['personel_nama'])) {
             foreach ($form['personel_nama'] as $i => $nama) {
-                $personel[] = [
-                    'nama' => $nama,
-                    'nomor_hp' => $form['personel_hp'][$i]
-                ];
+                if (!empty(trim($nama))) {
+                    $personel[] = [
+                        'nama' => $nama,
+                        'nomor_hp' => $form['personel_hp'][$i] ?? null
+                    ];
+                }
             }
         }
 
         session()->set('review_data', [
-            'form' => $form,
-            'personel' => $personel,
-            'foto_diri' => $tmpPath . $fotoDiriName,
-            'foto_ktp' => $tmpPath . $fotoKtpName
+            'form'      => $form,
+            'personel'  => $personel,
+            'foto_diri' => 'uploads/tmp/' . $fotoDiriName,
+            'foto_ktp'  => 'uploads/tmp/' . $fotoKtpName
         ]);
 
         return view('tamu/review', [
-            'form' => $form,
-            'personel' => $personel,
-            'foto_diri' => $tmpPath . $fotoDiriName,
-            'foto_ktp' => $tmpPath . $fotoKtpName
+            'form'      => $form,
+            'personel'  => $personel,
+            'foto_diri' => 'uploads/tmp/' . $fotoDiriName,
+            'foto_ktp'  => 'uploads/tmp/' . $fotoKtpName
         ]);
     }
     public function submitFinal()
     {
-        $data = session()->get('review_data');
-        if (!$data) {
-            return redirect()->to('tamu/addtamu');
+        $sessionData = session()->get('review_data');
+
+        if (!$sessionData) {
+            return redirect()->to('/tamu')->with('error', 'Session habis, silakan isi ulang form');
         }
 
-        $model = new TamuModel();
-        $db = \Config\Database::connect();
+        $form     = $sessionData['form'];
+        $personel = $sessionData['personel'];
 
-        // Generate nomor tiket
-        $today = date('Ymd');
-        $countToday = $model
-            ->where('DATE(created_at)', date('Y-m-d'))
-            ->countAllResults();
+        // ===== Generate Nomor Tiket =====
+        $model = new \App\Models\TamuModel();
+        $tanggal = $form['tanggal_kedatangan']; // yyyy-mm-dd
+        $urut = $model->countByTanggal($tanggal) + 1;
 
-        $nomorTiket = 'TK-' . $today . '-' . str_pad($countToday + 1, 4, '0', STR_PAD_LEFT);
+        $nomorTiket = 'GK-' .
+            date('Ymd', strtotime($tanggal)) . '-' .
+            str_pad($urut, 3, '0', STR_PAD_LEFT);
 
-        // Pindahkan file ke folder final
-        $fotoDiriFinal = 'uploads/foto_diri/' . basename($data['foto_diri']);
-        $fotoKtpFinal  = 'uploads/foto_ktp/' . basename($data['foto_ktp']);
+        // ===== Path =====
+        $tmpPath = WRITEPATH . 'uploads/tmp/';
+        $fotoDiriFinalPath = 'uploads/foto_diri/';
+        $fotoKtpFinalPath  = 'uploads/foto_ktp/';
 
-        rename($data['foto_diri'], $fotoDiriFinal);
-        rename($data['foto_ktp'], $fotoKtpFinal);
+        if (!is_dir(FCPATH . $fotoDiriFinalPath)) {
+            mkdir(FCPATH . $fotoDiriFinalPath, 0777, true);
+        }
 
-        // Insert tb_tamu
-        $tamuID = $model->insert([
-            'nomor_tiket' => $nomorTiket,
-            'lokasi_dc' => $data['form']['lokasi_dc'],
-            'kategori_keperluan' => $data['form']['kategori_keperluan'],
-            'keperluan' => $data['form']['keperluan'],
-            'nama' => $data['form']['nama'],
-            'asal' => $data['form']['asal'],
-            'nomor_hp' => $data['form']['nomor_hp'],
-            'email' => $data['form']['email'],
-            'jumlah' => $data['form']['jumlah'],
-            'aktivitas' => $data['form']['aktivitas'],
-            'tanggal_kedatangan' => $data['form']['tanggal_kedatangan'],
-            'waktu_kedatangan' => $data['form']['waktu_kedatangan'],
-            'foto_diri' => basename($fotoDiriFinal),
-            'foto_ktp' => basename($fotoKtpFinal),
+        if (!is_dir(FCPATH . $fotoKtpFinalPath)) {
+            mkdir(FCPATH . $fotoKtpFinalPath, 0777, true);
+        }
+
+        // ===== Pindahkan File =====
+        $fotoDiriName = basename($sessionData['foto_diri']);
+        $fotoKtpName  = basename($sessionData['foto_ktp']);
+
+        rename($tmpPath . $fotoDiriName, FCPATH . $fotoDiriFinalPath . $fotoDiriName);
+        rename($tmpPath . $fotoKtpName,  FCPATH . $fotoKtpFinalPath . $fotoKtpName);
+
+        // ===== Insert tb_tamu =====
+        $tamuId = $model->insert([
+            'nomor_tiket'        => $nomorTiket,
+            'lokasi_dc'          => $form['lokasi_dc'],
+            'kategori_keperluan' => $form['kategori_keperluan'],
+            'keperluan'          => $form['keperluan'],
+            'nama'               => $form['nama'],
+            'asal'               => $form['asal'],
+            'nomor_hp'           => $form['nomor_hp'],
+            'email'              => $form['email'],
+            'jumlah'             => $form['jumlah'],
+            'aktivitas'          => $form['aktivitas'],
+            'tanggal_kedatangan' => $form['tanggal_kedatangan'],
+            'waktu_kedatangan'   => $form['waktu_kedatangan'],
+            'foto_diri'          => $fotoDiriName,
+            'foto_ktp'           => $fotoKtpName,
         ]);
 
-        // Insert personel
-        foreach ($data['personel'] as $p) {
-            $db->table('tamu_personel')->insert([
-                'tamu_id' => $tamuID,
-                'nama' => $p['nama'],
-                'nomor_hp' => $p['nomor_hp']
-            ]);
+        // ===== Insert Personel =====
+        if (!empty($personel)) {
+            $db = \Config\Database::connect();
+            foreach ($personel as $p) {
+                $db->table('tamu_personel')->insert([
+                    'tamu_id'  => $tamuId,
+                    'nama'     => $p['nama'],
+                    'nomor_hp' => $p['nomor_hp'],
+                ]);
+            }
         }
 
+        // ===== Bersihkan Session =====
         session()->remove('review_data');
-        session()->set([
-            'tamu_id' => $tamuID,
-            'nomor_tiket' => $nomorTiket
-        ]);
 
-        return redirect()->to('tamu/success');
+        return redirect()->to('/tamu/success')
+            ->with('success', 'Registrasi berhasil')
+            ->with('nomor_tiket', $nomorTiket)
+            ->with('tamu_id', $tamuId);
     }
     public function success()
     {
