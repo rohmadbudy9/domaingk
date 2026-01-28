@@ -57,3 +57,5 @@ $routes->group('pengguna', ['AuthFilter' => 'Admin'], function ($routes) {
     $routes->post('update/(:num)', 'PenggunaController::update/$1');
     $routes->get('delete/(:num)', 'PenggunaController::delete/$1');
 });
+
+$routes->get('/opd/totalberita', 'Dashboard::totalBerita');
