@@ -80,7 +80,8 @@ class Api extends ResourceController
 
             return $this->respond($data);
         } catch (\Exception $e) {
-            return $this->failServerError('Gagal terhubung ke database Kapanewon.');
+            // Kita keluarkan pesan error bawaan MySQL/CI4 untuk mencari tahu masalahnya
+            return $this->failServerError('Detail Error MySQL: ' . $e->getMessage());
         }
     }
 }
