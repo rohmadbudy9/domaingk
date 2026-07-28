@@ -59,3 +59,7 @@ $routes->group('pengguna', ['AuthFilter' => 'Admin'], function ($routes) {
 });
 
 $routes->get('/opd/totalberita', 'Dashboard::totalBerita');
+$routes->group('api', function ($routes) {
+    // Menangkap parameter kecamatan, contoh: /api/artikel/playen
+    $routes->get('artikel/(:segment)', 'Api::artikel/$1');
+});
