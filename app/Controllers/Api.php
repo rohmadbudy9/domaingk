@@ -89,4 +89,81 @@ class Api extends ResourceController
             return $this->failServerError('Detail Error MySQL: ' . $e->getMessage());
         }
     }
+    // Method baru untuk mengambil isi artikel (bukan sekadar jumlah)
+    public function daftar_berita($kecamatan = null)
+    {
+        $daftar_kecamatan = [
+            'gedangsari'  => 'gnkab_01gedangsari',
+            'girisubo'    => 'gnkab_02girisubo',
+            'karangmojo'  => 'gnkab_03karangmojo',
+            'ngawen'      => 'gnkab_04ngawen',
+            'nglipar'     => 'gnkab_05nglipar',
+            'paliyan'     => 'gnkab_06paliyan',
+            'panggang'    => 'gnkab_07panggang',
+            'patuk'       => 'gnkab_08patuk',
+            'playen'      => 'gnkab_09playen',
+            'ponjong'     => 'gnkab_10ponjong',
+            'purwosari'   => 'gnkab_11purwosari',
+            'rongkop'     => 'gnkab_12rongkop',
+            'saptosari'   => 'gnkab_13saptosari',
+            'semanu'      => 'gnkab_14semanu',
+            'semin'       => 'gnkab_15semin',
+            'tanjungsari' => 'gnkab_16tanjungsari',
+            'tepus'       => 'gnkab_17tepus',
+            'wonosari'    => 'gnkab_18wonosari'
+        ];
+
+        if (!array_key_exists($kecamatan, $daftar_kecamatan)) {
+            return $this->failNotFound('Kecamatan tidak terdaftar.');
+        }
+
+        $nama_database = $daftar_kecamatan[$kecamatan];
+
+        $db_config = [
+            'DBDriver' => 'MySQLi',
+            'hostname' => '12.12.12.82', 
+            'username' => 'cekdomain_new',      
+            'password' => 'Adalah123./',          
+            'database' => $nama_database,
+            'DBPrefix' => '',
+            'pConnect' => false,
+            'DBDebug'  => false, 
+            'charset'  => 'utf8',
+            'DBCollat' => 'utf8_general_ci',
+        ];
+
+        try {
+            $db = \Config\Database::connect($db_config, false);
+            
+            // Menggunakan Query Builder CI4 untuk mengambil list artikel
+            $builder = $db->table('tbl_artikel');
+            
+            // Pilih kolom yang ingin ditampilkan (sesuai struktur tabel Anda)
+            $builder->select('id_artikel, judul, isi, gambar, create_at, update_at, judul_seo, publish');
+            
+            // Hanya ambil yang status publish = 'Y'
+            $builder->where('publish', 'Y');
+            
+            // Urutkan dari berita terbaru
+            $builder->orderBy('create_at', 'DESC');
+            
+            // Batasi misalnya hanya 10 artikel terbaru agar API tidak terlalu berat saat diakses
+            $builder->limit(10); 
+            
+            $query = $builder->get()->getResult();
+            $db->close();
+
+            $data = [
+                'status'         => 200,
+                'nama_kecamatan' => 'Kecamatan ' . ucfirst($kecamatan),
+                'total_data'     => count($query),
+                'artikel'        => $query // Ini akan menampilkan array berisi list berita
+            ];
+
+            return $this->respond($data);
+            
+        } catch (\Exception $e) {
+            return $this->failServerError('Detail Error MySQL: ' . $e->getMessage());
+        }
+    }
 }
