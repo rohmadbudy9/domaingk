@@ -9,46 +9,50 @@ class Api extends ResourceController
     // Method ini menangkap nama kecamatan dari URL
     public function artikel($kecamatan = null)
     {
-        // 1. Validasi nama kecamatan agar aman dari injeksi nama database aneh
+        // 1. Mapping nama di URL dengan nama Database yang tepat
         $daftar_kecamatan = [
-            'gedangsari',
-            'girisubo',
-            'karangmojo',
-            'ngawen',
-            'nglipar',
-            'paliyan',
-            'panggang',
-            'patuk',
-            'playen',
-            'ponjong',
-            'purwosari',
-            'rongkop',
-            'saptosari',
-            'semanu',
-            'semin',
-            'tanjungsari',
-            'tepus',
-            'wonosari'
+            'gedangsari'  => 'gnkab_01gedangsari',
+            'girisubo'    => 'gnkab_02girisubo',
+            'karangmojo'  => 'gnkab_03karangmojo',
+            'ngawen'      => 'gnkab_04ngawen',
+            'nglipar'     => 'gnkab_05nglipar',
+            'paliyan'     => 'gnkab_06paliyan',
+            'panggang'    => 'gnkab_07panggang',
+            'patuk'       => 'gnkab_08patuk',
+            'playen'      => 'gnkab_09playen',
+            'ponjong'     => 'gnkab_10ponjong',
+            'purwosari'   => 'gnkab_11purwosari',
+            'rongkop'     => 'gnkab_12rongkop',
+            'saptosari'   => 'gnkab_13saptosari',
+            'semanu'      => 'gnkab_14semanu',
+            'semin'       => 'gnkab_15semin',
+            'tanjungsari' => 'gnkab_16tanjungsari',
+            'tepus'       => 'gnkab_17tepus',
+            'wonosari'    => 'gnkab_18wonosari'
         ];
 
-        if (!in_array($kecamatan, $daftar_kecamatan)) {
+        // Validasi: Cek apakah nama kecamatan dari URL ada di daftar "Key" array kita
+        if (!array_key_exists($kecamatan, $daftar_kecamatan)) {
             return $this->failNotFound('Kecamatan tidak terdaftar.');
         }
 
-        // 2. Ambil parameter tanggal dari URL jika ada (contoh: ?dari=2026-07-01&ke=2026-07-31)
+        // Ambil nama database yang sesuai dari array
+        $nama_database = $daftar_kecamatan[$kecamatan];
+
+        // 2. Ambil parameter tanggal dari URL jika ada
         $dari = $this->request->getGet('dari');
         $ke   = $this->request->getGet('ke');
 
         // 3. Setup koneksi dinamis ke database spesifik
         $db_config = [
             'DBDriver' => 'MySQLi',
-            'hostname' => '12.12.12.82', // Sesuaikan host database master
-            'username' => 'cekdomain_new',      // Sesuaikan username
-            'password' => 'Adalah123./',          // Sesuaikan password
-            'database' => 'gnkab_01' . $kecamatan, // Nama database dinamis!
+            'hostname' => '12.12.12.82',
+            'username' => 'cekdomain_new',
+            'password' => 'Adalah123./',
+            'database' => $nama_database, // Menggunakan variabel mapping database!
             'DBPrefix' => '',
             'pConnect' => false,
-            'DBDebug'  => false, // Matikan debug agar JSON tidak rusak jika error
+            'DBDebug'  => false,
             'charset'  => 'utf8',
             'DBCollat' => 'utf8_general_ci',
         ];
@@ -82,7 +86,6 @@ class Api extends ResourceController
 
             return $this->respond($data);
         } catch (\Exception $e) {
-            // Kita keluarkan pesan error bawaan MySQL/CI4 untuk mencari tahu masalahnya
             return $this->failServerError('Detail Error MySQL: ' . $e->getMessage());
         }
     }
