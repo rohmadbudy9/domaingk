@@ -49,6 +49,8 @@ class Api extends ResourceController
             'DBPrefix' => '',
             'pConnect' => false,
             'DBDebug'  => false, // Matikan debug agar JSON tidak rusak jika error
+            'charset'  => 'utf8',
+            'DBCollat' => 'utf8_general_ci',
         ];
 
         try {
