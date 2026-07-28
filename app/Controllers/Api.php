@@ -42,10 +42,10 @@ class Api extends ResourceController
         // 3. Setup koneksi dinamis ke database spesifik
         $db_config = [
             'DBDriver' => 'MySQLi',
-            'hostname' => 'localhost', // Sesuaikan host database master
-            'username' => 'root',      // Sesuaikan username
-            'password' => '',          // Sesuaikan password
-            'database' => 'db_' . $kecamatan, // Nama database dinamis!
+            'hostname' => '12.12.12.82', // Sesuaikan host database master
+            'username' => 'cekdomain_new',      // Sesuaikan username
+            'password' => 'Adalah123./',          // Sesuaikan password
+            'database' => 'gnkab_01' . $kecamatan, // Nama database dinamis!
             'DBPrefix' => '',
             'pConnect' => false,
             'DBDebug'  => false, // Matikan debug agar JSON tidak rusak jika error
