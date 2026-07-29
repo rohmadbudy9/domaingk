@@ -59,6 +59,20 @@ $routes->group('pengguna', ['AuthFilter' => 'Admin'], function ($routes) {
 });
 
 $routes->get('/opd/totalberita', 'Dashboard::totalBerita');
-// Tambahkan ['filter' => 'cors'] di parameter terakhir
+// ==========================
+// API ROUTES
+// ==========================
+
+// 1. Tambahkan baris ini untuk menangani Preflight CORS (OPTIONS Request)
+$routes->options('api/(:any)', function () {
+    $response = response();
+    $response->setStatusCode(204);
+    $response->setHeader('Access-Control-Allow-Origin', '*');
+    $response->setHeader('Access-Control-Allow-Headers', '*');
+    $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+    return $response;
+});
+
+// 2. Ini adalah rute Anda yang sudah ada sebelumnya
 $routes->get('api/daftar_berita/(:segment)', 'Api::daftar_berita/$1', ['filter' => 'cors']);
 $routes->get('api/artikel/(:segment)', 'Api::artikel/$1', ['filter' => 'cors']);
