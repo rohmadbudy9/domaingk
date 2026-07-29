@@ -36,7 +36,6 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'auth'          => \App\Filters\AuthFilter::class,
         'ratelimit'     => \App\Filters\RateLimitFilter::class,
-        'cors'          => \App\Filters\Cors::class,
     ];
 
     /**
@@ -72,11 +71,7 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'csrf' => [
-                'except' => [
-                    'api/*'
-                ]
-            ],
+            'csrf' => [],
             'auth' => [
                 'except' => [
                     '/',
@@ -85,7 +80,6 @@ class Filters extends BaseFilters
                     'doLogin',
                     'tamu',
                     'tamu/*',
-                    'api/*',
                 ],
             ],
 
