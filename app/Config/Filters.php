@@ -36,6 +36,7 @@ class Filters extends BaseFilters
         'performance'   => PerformanceMetrics::class,
         'auth'          => \App\Filters\AuthFilter::class,
         'ratelimit'     => \App\Filters\RateLimitFilter::class,
+        'cors'          => \App\Filters\Cors::class,
     ];
 
     /**

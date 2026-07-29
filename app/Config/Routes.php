@@ -59,8 +59,6 @@ $routes->group('pengguna', ['AuthFilter' => 'Admin'], function ($routes) {
 });
 
 $routes->get('/opd/totalberita', 'Dashboard::totalBerita');
-$routes->group('api', function ($routes) {
-    // Menangkap parameter kecamatan, contoh: /api/artikel/playen
-    $routes->get('artikel/(:segment)', 'Api::artikel/$1');
-});
-$routes->get('api/daftar_berita/(:segment)', 'Api::daftar_berita/$1');
+// Tambahkan ['filter' => 'cors'] di parameter terakhir
+$routes->get('api/daftar_berita/(:segment)', 'Api::daftar_berita/$1', ['filter' => 'cors']);
+$routes->get('api/artikel/(:segment)', 'Api::artikel/$1', ['filter' => 'cors']);
