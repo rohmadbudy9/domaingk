@@ -1,5 +1,13 @@
 <?php
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-TOKEN');
+header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
 
+// Jika browser hanya sekadar "bertanya" (OPTIONS), beri lampu hijau dan langsung hentikan script
+if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+    http_response_code(204);
+    exit;
+}
 /*
  *---------------------------------------------------------------
  * CHECK PHP VERSION
