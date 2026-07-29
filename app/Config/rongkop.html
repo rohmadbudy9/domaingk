@@ -1,0 +1,138 @@
+<!-- ========================================== -->
+<!-- 1. CSS WIDGET (Desain Tampilan)            -->
+<!-- ========================================== -->
+<style>
+    .widget-gk-container {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #ffffff;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        max-width: 100%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .widget-gk-header {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #0056b3;
+    }
+    .widget-gk-item {
+        padding: 12px 0;
+        border-bottom: 1px dashed #ccc;
+    }
+    .widget-gk-item:last-child {
+        border-bottom: none;
+    }
+    .widget-gk-judul {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2c3e50;
+        margin: 0 0 6px 0;
+        line-height: 1.4;
+    }
+    .widget-gk-meta {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 11px;
+        color: #666;
+    }
+    .widget-gk-jenis {
+        background-color: #e9ecef;
+        color: #495057;
+        padding: 3px 8px;
+        border-radius: 4px;
+        font-weight: 500;
+    }
+    .widget-gk-tanggal {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+    .widget-gk-loading {
+        text-align: center;
+        color: #888;
+        font-size: 13px;
+        padding: 20px 0;
+    }
+</style>
+
+<!-- ========================================== -->
+<!-- 2. HTML WIDGET (Tempat Berita Muncul)      -->
+<!-- ========================================== -->
+<div class="widget-gk-container">
+    <div class="widget-gk-header" id="widget-title">Informasi Terbaru</div>
+    <div id="daftar-berita-gk">
+        <div class="widget-gk-loading">Sedang memuat data...</div>
+    </div>
+</div>
+
+<!-- ========================================== -->
+<!-- 3. JAVASCRIPT (Logika Pengambil Data API)  -->
+<!-- ========================================== -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // Silakan ubah URL di bawah ini sesuai dengan endpoint API yang diinginkan
+        const apiUrl = 'https://domaingk.gunungkidulkab.go.id/api/daftar_berita/rongkop';
+        
+        const containerId = document.getElementById('daftar-berita-gk');
+        const widgetTitle = document.getElementById('widget-title');
+
+        fetch(apiUrl)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Gagal terhubung ke server API');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Mengambil array berita dari kunci "artikel"
+                const articles = data.artikel || [];
+
+                // Menyesuaikan judul widget dengan nama kecamatan dari API
+                if(data.nama_kecamatan) {
+                    widgetTitle.innerHTML = 'Informasi Terbaru ' + data.nama_kecamatan;
+                }
+
+                containerId.innerHTML = ''; // Hapus teks loading
+
+                if (articles.length === 0) {
+                    containerId.innerHTML = '<div style="text-align:center; color:#888; font-size:12px;">Tidak ada informasi terbaru.</div>';
+                    return;
+                }
+
+                // Membatasi tampilan hanya 5 berita paling atas
+                const batasBerita = articles.slice(0, 5);
+
+                batasBerita.forEach(item => {
+                    let judul = item.judul || 'Tanpa Judul';
+                    let jenis = 'Berita'; // Default label untuk kategori
+                    let tanggal = item.create_at || '-';
+
+                    let htmlItem = `
+                        <div class="widget-gk-item">
+                            <h4 class="widget-gk-judul">${judul}</h4>
+                            <div class="widget-gk-meta">
+                                <span class="widget-gk-jenis">${jenis}</span>
+                                <span class="widget-gk-tanggal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                                      <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4H1z"/>
+                                    </svg>
+                                    ${tanggal}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    containerId.innerHTML += htmlItem;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                containerId.innerHTML = '<div style="color:red; font-size:12px; text-align:center;">Gagal memuat data dari server.</div>';
+            });
+    });
+</script>

@@ -138,10 +138,16 @@ class Api extends ResourceController
             $db = \Config\Database::connect($db_config, false);
 
             $builder = $db->table('tbl_artikel');
-            $builder->select('id_artikel, judul, isi, gambar, create_at, update_at, judul_seo, publish');
+
+            // PERUBAHAN 1: Hanya panggil kolom 'judul' dan 'create_at'
+            // Abaikan kolom 'isi', 'gambar', dll agar query sangat ringan
+            $builder->select('judul, create_at');
+
             $builder->where('publish', 'Y');
             $builder->orderBy('create_at', 'DESC');
-            $builder->limit(10);
+
+            // PERUBAHAN 2: Batasi langsung dari database maksimal 5 baris (sebelumnya 10)
+            $builder->limit(5);
 
             $query = $builder->get()->getResult();
             $db->close();
