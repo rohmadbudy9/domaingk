@@ -6,22 +6,6 @@ use CodeIgniter\RESTful\ResourceController;
 
 class Api extends ResourceController
 {
-    public function __construct()
-    {
-        // Mengizinkan akses dari semua domain (tanda * berarti semua diizinkan)
-        header('Access-Control-Allow-Origin: *');
-
-        // Mengizinkan metode request standar
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-
-        // Mengizinkan tipe header tertentu
-        header('Access-Control-Allow-Headers: Content-Type, Content-Length, Accept-Encoding, Authorization');
-
-        // Menangani pre-flight request dari browser
-        if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-            exit(0);
-        }
-    }
     // Method ini menangkap nama kecamatan dari URL
     public function artikel($kecamatan = null)
     {
@@ -65,7 +49,7 @@ class Api extends ResourceController
             'hostname' => '12.12.12.82',
             'username' => 'cekdomain_new',
             'password' => 'Adalah123./',
-            'database' => $nama_database, // Menggunakan variabel mapping database!
+            'database' => $nama_database,
             'DBPrefix' => '',
             'pConnect' => false,
             'DBDebug'  => false,
@@ -100,11 +84,13 @@ class Api extends ResourceController
                 'periode'        => ($dari && $ke) ? "$dari s/d $ke" : "Semua Waktu"
             ];
 
+            // Method respond() bawaan ResourceController akan otomatis mengirim JSON
             return $this->respond($data);
         } catch (\Exception $e) {
             return $this->failServerError('Detail Error MySQL: ' . $e->getMessage());
         }
     }
+
     // Method baru untuk mengambil isi artikel (bukan sekadar jumlah)
     public function daftar_berita($kecamatan = null)
     {
@@ -151,19 +137,10 @@ class Api extends ResourceController
         try {
             $db = \Config\Database::connect($db_config, false);
 
-            // Menggunakan Query Builder CI4 untuk mengambil list artikel
             $builder = $db->table('tbl_artikel');
-
-            // Pilih kolom yang ingin ditampilkan (sesuai struktur tabel Anda)
             $builder->select('id_artikel, judul, isi, gambar, create_at, update_at, judul_seo, publish');
-
-            // Hanya ambil yang status publish = 'Y'
             $builder->where('publish', 'Y');
-
-            // Urutkan dari berita terbaru
             $builder->orderBy('create_at', 'DESC');
-
-            // Batasi misalnya hanya 10 artikel terbaru agar API tidak terlalu berat saat diakses
             $builder->limit(10);
 
             $query = $builder->get()->getResult();
@@ -173,7 +150,7 @@ class Api extends ResourceController
                 'status'         => 200,
                 'nama_kecamatan' => 'Kecamatan ' . ucfirst($kecamatan),
                 'total_data'     => count($query),
-                'artikel'        => $query // Ini akan menampilkan array berisi list berita
+                'artikel'        => $query
             ];
 
             return $this->respond($data);

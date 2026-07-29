@@ -10,20 +10,14 @@ class Cors implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Mengizinkan semua domain untuk mengakses API ini
-        header('Access-Control-Allow-Origin: *');
-        header('Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization');
-        header('Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE');
-        
-        // Menangani preflight request dari browser
-        $method = $_SERVER['REQUEST_METHOD'] ?? '';
-        if ($method == 'OPTIONS') {
-            die();
-        }
+        // Biarkan kosong, karena Preflight OPTIONS sudah kita tangani di Routes.php
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)
     {
-        // Tidak perlu penambahan apa-apa di sini
+        // Paksa CI4 untuk selalu menempelkan header ini sebelum data dikirim ke browser
+        $response->setHeader('Access-Control-Allow-Origin', '*');
+        $response->setHeader('Access-Control-Allow-Headers', '*');
+        $response->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
     }
 }
