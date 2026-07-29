@@ -80,6 +80,7 @@ class Filters extends BaseFilters
                     'doLogin',
                     'tamu',
                     'tamu/*',
+                    'api/*',
                 ],
             ],
 

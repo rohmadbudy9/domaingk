@@ -74,5 +74,5 @@ $routes->options('api/(:any)', function () {
 });
 
 // 2. Ini adalah rute Anda yang sudah ada sebelumnya
-$routes->get('api/daftar_berita/(:segment)', 'Api::daftar_berita/$1', ['filter' => 'cors']);
-$routes->get('api/artikel/(:segment)', 'Api::artikel/$1', ['filter' => 'cors']);
+$routes->get('api/daftar_berita/(:segment)', 'Api::daftar_berita/$1');
+$routes->get('api/artikel/(:segment)', 'Api::artikel/$1');
