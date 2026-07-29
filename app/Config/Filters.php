@@ -72,7 +72,11 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            'csrf',
+            'csrf' => [
+                'except' => [
+                    'api/*'
+                ]
+            ],
             'auth' => [
                 'except' => [
                     '/',
@@ -81,6 +85,7 @@ class Filters extends BaseFilters
                     'doLogin',
                     'tamu',
                     'tamu/*',
+                    'api/*',
                 ],
             ],
 
